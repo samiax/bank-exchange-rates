@@ -45,6 +45,7 @@ class Service
         $this->merge((new KuveytTurk)->get());
         $this->merge((new Ziraat)->get());
         $this->merge((new CepteTeb)->get());
+        $this->merge((new Kocak)->get());
 
         return $this->rates;
     }
