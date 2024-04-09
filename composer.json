@@ -1,5 +1,5 @@
 {
-    "name": "ahmeti/bank-exchange-rates",
+    "name": "samiax/bank-exchange-rates",
     "description": "Banka Döviz Kurları - Api",
     "keywords": [
         "bank",
@@ -7,7 +7,7 @@
         "rates",
         "api"
     ],
-    "homepage": "https://github.com/ahmeti/bank-exchange-rates",
+    "homepage": "https://github.com/samiax/bank-exchange-rates",
     "license": "MIT",
     "authors": [
         {
