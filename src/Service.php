@@ -15,7 +15,7 @@ class Service
                 $this->rates[$item['symbol']] = [];
             }
 
-            $this->rates[$item['symbol']][] = $item;
+            $this->rates[$item['symbol']][$item['key']] = $item;
         }
     }
 
