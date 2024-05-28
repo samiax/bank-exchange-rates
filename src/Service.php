@@ -36,16 +36,65 @@ class Service
 
     public function get(): array
     {
-        $this->merge((new Garanti)->get());
-        $this->merge((new YapiKredi)->get());
-        $this->merge((new HalkBank)->get());
-        $this->merge((new EnPara)->get());
-        $this->merge((new AkBank)->get());
-        $this->merge((new IsBankasi)->get());
-        $this->merge((new KuveytTurk)->get());
-        $this->merge((new Ziraat)->get());
-        $this->merge((new CepteTeb)->get());
-        $this->merge((new Kocak)->get());
+        try {
+            $this->merge((new Garanti)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new YapiKredi)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new HalkBank)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new EnPara)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new AkBank)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new IsBankasi)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new KuveytTurk)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new Ziraat)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new CepteTeb)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
+            $this->merge((new Kocak)->get());
+        } catch (\Exception $e) {
+            
+        }
 
         return $this->rates;
     }
