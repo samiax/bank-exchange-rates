@@ -37,6 +37,12 @@ class Service
     public function get(): array
     {
         try {
+            $this->merge((new BtcTurk)->get());
+        } catch (\Exception $e) {
+            
+        }
+
+        try {
             $this->merge((new Garanti)->get());
         } catch (\Exception $e) {
             
