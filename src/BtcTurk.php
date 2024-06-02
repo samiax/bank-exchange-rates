@@ -11,7 +11,7 @@ class BtcTurk
     const KEY = 'btcturk';
     const NAME = 'BTC Türk';
     const BASE_URL = 'https://www.btcturk.com';
-    const DATA_URL = 'https://api.btcturk.com/api/v2/server/exchangeinfo';
+    const DATA_URL = 'https://api.btcturk.com/api/v2/ticker/currency';
 
     protected $items = [];
 
@@ -35,21 +35,25 @@ class BtcTurk
             'sec-ch-ua-mobile' => '?0',
             'sec-ch-ua-platform' => '"macOS"'
         ];
+        $query = [
+            'symbol' => 'TRY',
+        ];
 
         $res = $client->get(self::DATA_URL, [
-            'headers' => $headers
+            'headers' => $headers,
+            'query' => $query,
         ]);
 
         $items = json_decode($res->getBody()->getContents(), true);
 
-        foreach ($items['data']['symbols'] as $item) {
-            if (in_array($item['name'], ['BTCTRY', 'ETHTRY', 'AVAXTRY'])) {
+        foreach ($items['data'] as $item) {
+            if (in_array($item['pair'], ['BTCTRY', 'ETHTRY', 'AVAXTRY'])) {
                 $this->items[] = [
                     'key' => self::KEY,
                     'name' => self::NAME,
-                    'symbol' => $item['numerator'] . '/TRY',
-                    'buy' => $item['maximumLimitOrderPrice'],
-                    'sell' => $item['maximumLimitOrderPrice'],
+                    'symbol' => $item['numeratorSymbol'] . '/TRY',
+                    'buy' => $item['bid'],
+                    'sell' => $item['ask'],
                     'time' => $now->format('Y-m-d H:i:s'),
                     'description' => null,
                 ];
