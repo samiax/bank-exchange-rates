@@ -49,7 +49,7 @@ class KuveytTurk
             'headers' => $headers
         ]);
 
-        $pattern = '/"fnptxhgtl":"(.*?)"/';
+        $pattern = '/"fn-rlrtd":"(.*?)"/';
         preg_match($pattern, $res->getBody()->getContents(), $matches);
         return $matches[1];
     }
