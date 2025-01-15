@@ -40,20 +40,24 @@ class Kocak
 
         $crawler->filter('#exchangeTableContent .area-value')
             ->each(function ($row, $i) {
-                $currCode = $row->filter('.first .text-ellipsis')->eq(0)->text();
-                $buy = $row->filter('.buying .text-ellipsis')->eq(0)->text();
-                $sell = $row->filter('.selling .text-ellipsis')->eq(0)->text();
+                try {
+                    $currCode = $row->filter('.first .text-ellipsis')->eq(0)->text();
+                    $buy = $row->filter('.buying .text-ellipsis')->eq(0)->text();
+                    $sell = $row->filter('.selling .text-ellipsis')->eq(0)->text();
 
-                if (!empty(self::REPLACES[$currCode])) {
-                    $this->items[] = [
-                        'key' => self::KEY,
-                        'name' => self::NAME,
-                        'symbol' => Service::replace(self::REPLACES, $currCode),
-                        'buy' => Service::toFloat($buy),
-                        'sell' => Service::toFloat($sell),
-                        'time' => date('Y-m-d H:i:s'),
-                        'description' => null,
-                    ];
+                    if (!empty(self::REPLACES[$currCode])) {
+                        $this->items[] = [
+                            'key' => self::KEY,
+                            'name' => self::NAME,
+                            'symbol' => Service::replace(self::REPLACES, $currCode),
+                            'buy' => Service::toFloat($buy),
+                            'sell' => Service::toFloat($sell),
+                            'time' => date('Y-m-d H:i:s'),
+                            'description' => null,
+                        ];
+                    }
+                } catch (\Exception $e) {
+                    echo "kocak error: " . $e->getMessage();
                 }
             });
 
