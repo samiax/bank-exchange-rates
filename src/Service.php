@@ -3,19 +3,22 @@
 namespace Ahmeti\BankExchangeRates;
 
 use DateTimeZone;
+use Exception;
 
 class Service
 {
-    protected $rates = [];
+    protected array $rates = [];
+
+    protected array $exceptions = [];
 
     protected function merge(array $items): void
     {
         foreach ($items as $item) {
-            if (!array_key_exists($item['symbol'], $this->rates)) {
+            if (! array_key_exists($item['symbol'], $this->rates)) {
                 $this->rates[$item['symbol']] = [];
             }
 
-            $this->rates[$item['symbol']][$item['key']] = $item;
+            $this->rates[$item['symbol']][] = $item;
         }
     }
 
@@ -26,7 +29,7 @@ class Service
 
     public static function toFloat(string $text): float
     {
-        return (float)str_replace(['.', ','], ['', '.'], $text);
+        return (float) str_replace(['.', ','], ['', '.'], $text);
     }
 
     public static function replace(array $replaces, $symbol): string
@@ -34,72 +37,70 @@ class Service
         return str_replace(array_keys($replaces), array_values($replaces), $symbol);
     }
 
+    public function hasError(): bool
+    {
+        return ! empty($this->exceptions);
+    }
+
+    public function getErrors(): array
+    {
+        return $this->exceptions;
+    }
+
     public function get(): array
     {
         try {
-            $this->merge((new BtcTurk)->get());
-        } catch (\Exception $e) {
-            
-        }
-
-        try {
             $this->merge((new Garanti)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[Garanti::KEY] = $exception;
         }
 
         try {
             $this->merge((new YapiKredi)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[YapiKredi::KEY] = $exception;
         }
 
         try {
             $this->merge((new HalkBank)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[HalkBank::KEY] = $exception;
         }
 
         try {
             $this->merge((new EnPara)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[EnPara::KEY] = $exception;
         }
 
         try {
             $this->merge((new AkBank)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[AkBank::KEY] = $exception;
         }
 
         try {
             $this->merge((new IsBankasi)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[IsBankasi::KEY] = $exception;
         }
 
         try {
             $this->merge((new KuveytTurk)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[KuveytTurk::KEY] = $exception;
         }
 
         try {
             $this->merge((new Ziraat)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[Ziraat::KEY] = $exception;
         }
 
         try {
             $this->merge((new CepteTeb)->get());
-        } catch (\Exception $e) {
-            
-        }
-
-        try {
-            $this->merge((new Kocak)->get());
-        } catch (\Exception $e) {
-            
+        } catch (Exception $exception) {
+            $this->exceptions[CepteTeb::KEY] = $exception;
         }
 
         return $this->rates;
