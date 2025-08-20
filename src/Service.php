@@ -36,6 +36,9 @@ class Service
 
     public function get(): array
     {
+        set_time_limit(0);
+        ini_set('memory_limit', '-1');
+
         try {
             $this->merge((new BtcTurk)->get());
         } catch (\Exception $e) {
