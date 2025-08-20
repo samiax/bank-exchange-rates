@@ -102,6 +102,12 @@ class Service
             
         }
 
+        try {
+            $this->merge((new Midas)->get());
+        } catch (\Exception $e) {
+            
+        }
+
         return $this->rates;
     }
 }
