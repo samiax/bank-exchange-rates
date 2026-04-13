@@ -50,8 +50,8 @@ class Kocak
                             'key' => self::KEY,
                             'name' => self::NAME,
                             'symbol' => Service::replace(self::REPLACES, $currCode),
-                            'buy' => Service::toFloat($buy),
-                            'sell' => Service::toFloat($sell),
+                            'buy' => Service::toFloat(str_replace(',', '', $buy)),
+                            'sell' => Service::toFloat(str_replace(',', '', $sell)),
                             'time' => date('Y-m-d H:i:s'),
                             'description' => null,
                         ];
