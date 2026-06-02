@@ -47,7 +47,7 @@ class BtcTurk
         $items = json_decode($res->getBody()->getContents(), true);
 
         foreach ($items['data'] as $item) {
-            if (in_array($item['pair'], ['BTCTRY', 'ETHTRY', 'AVAXTRY'])) {
+            if (in_array($item['pair'], ['BTCTRY', 'ETHTRY', 'AVAXTRY', 'USDCTRY'])) {
                 $this->items[] = [
                     'key' => self::KEY,
                     'name' => self::NAME,
